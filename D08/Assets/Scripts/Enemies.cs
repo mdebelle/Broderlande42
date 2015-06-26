@@ -68,4 +68,8 @@ public class Enemies : MonoBehaviour {
 		transform.position = agent.nextPosition;
 	}
 
+	public void takeDamage(){
+		lifepoint--;
+	}
+
 }
