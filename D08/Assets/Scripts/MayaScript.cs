@@ -15,6 +15,8 @@ public class MayaScript : MonoBehaviour {
 	bool					clickattack;
 	float					timetoattack;
 	bool 					attacked;
+	string					EnnemyName;
+	GameObject				TmpEnemy;
 
 	void Start () {
 
@@ -70,58 +72,48 @@ public class MayaScript : MonoBehaviour {
 				agent.destination = hitInfo.point;
 				if (hitInfo.collider.tag == "Enemy") {
 					clickattack = true;
-					attacked = false;
+					TmpEnemy = GameObject.Find (hitInfo.collider.name);
+					animator.SetBool ("attack", true);
 				}
 				else {
+					animator.SetBool ("attack", false);
 					clickattack = false;
 				}
 
 			}
-		}
-//		Debug.Log ("hitpos" +  hitInfo.transform.position);
-		
-		if (Input.GetMouseButtonUp (0) && attacked == true) {
-			Debug.Log ("up");
-			clickattack = false;
-			if (Time.time - timetoattack > 2f) {
-				animator.SetBool ("attack", false);
-				attacked = false;
-			}
-		}
-
-		if (clickattack == true) {
-			Debug.Log ("aie");
+		}		
+	
+		if (clickattack == true)
 			MayaAttack (hitInfo.collider);
+
+		if (agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0) {
+			animator.SetBool ("run", false);
 		} else {
-			if (agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0) {
-				animator.SetBool ("run", false);
-			} else {
-				animator.SetBool ("run", true);	
-			}
+			animator.SetBool ("run", true);	
 		}
 	}
+
 
 	void MayaAttack(Collider coll) {
-		
-		agent.destination = hitInfo.point;
+
 		dist = Mathf.Abs (Vector3.Distance (transform.position, hitInfo.transform.position));
 		if (dist > 1.5f) {
+			agent.destination = hitInfo.point;
 			animator.SetBool ("run", true);
+			animator.SetBool ("attack", false);
 		} else {
+			agent.destination = transform.position;
 			animator.SetBool ("run", false);
-			if (hitInfo.collider.GetComponent<Enemies> ().lifepoint == 1) {
-				clickattack = false;
-			}
-			hitInfo.collider.GetComponent<Enemies> ().takeDamage ();
 			animator.SetBool ("attack", true);
-			attacked = true;
 		}
+		if (hitInfo.collider.GetComponent<Enemies> ().lifepoint == 0) {
+			clickattack = false;
+			animator.SetBool ("attack", false);
 
+		}
 	}
-
 	
-	void OnAnimatorMove ()
-	{
+	void OnAnimatorMove () {
 		transform.position = agent.nextPosition;
 	}
 

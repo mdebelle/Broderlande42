@@ -41,7 +41,8 @@ public class Enemies : MonoBehaviour {
 			timetodead = Time.time;
 			lifepoint--;
 		} else if (lifepoint < 0 && Time.time - timetodead > 3f) {
-			Destroy(gameObject);
+			Debug.Log ("Dead");
+				Destroy(gameObject);
 		}
 
 		distToMaya = Mathf.Abs(Vector3.Distance(Maya.transform.position, transform.position));
@@ -61,7 +62,13 @@ public class Enemies : MonoBehaviour {
 			}
 		}
 	}
-	
+
+	void OnTriggerEnter(Collider coll){
+		Debug.Log (coll.tag);
+		if (coll.tag == "Sword")
+			takeDamage ();
+	}
+
 	void OnAnimatorMove ()
 	{
 		// Update position to agent position
