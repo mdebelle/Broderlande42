@@ -5,50 +5,57 @@ public class MayaScript : MonoBehaviour {
 
 
 	CharacterController 	cc;
-
 	Animator				animator;
-	protected AnimateState	CharacterAnimationState = AnimateState.idle;
+	
+	private NavMeshAgent	agent;
+	RaycastHit				hitInfo = new RaycastHit();
 
-	protected enum AnimateState {
-		idle,
-		run,
-		attack,
-		dead
+
+	void Start () {
+
+		cc 			= GetComponent<CharacterController> ();
+		animator	= GetComponent<Animator>();
+		agent		= GetComponent<NavMeshAgent>();
+
+		lifepoint	= 100;
+
 	}
 
-	public int health;
+	#region dead
 
-	#region NavMesh
+	public int 				lifepoint;
+	float					timetodead;
 
-	Vector3 				target;
-	Ray						ray;
-	RaycastHit				hit;
-	private NavMeshAgent	agent;
-	private NavMeshPath		path;
+	void ItIsTimeToDead (){
 
+		if (lifepoint == 0) {
+			animator.SetBool ("dead", true);
+			timetodead = Time.time;
+			lifepoint--;
+		} else if (lifepoint < 0 && Time.time - timetodead > 3f) {
+			Destroy(gameObject);
+		}
 
-	RaycastHit hitInfo = new RaycastHit();
-	Vector2 smoothDeltaPosition = Vector2.zero;
-	Vector2 velocity = Vector2.zero;
+	}
 
 	#endregion
 
-	// Use this for initialization
-	void Start () {
-		animator = GetComponent<Animator>();
-		cc = GetComponent<CharacterController> ();
-		agent = GetComponent<NavMeshAgent>();
-		path = new NavMeshPath();
 
-		target = transform.position;
-		Debug.Log (target);
-		health = 100;
-
+	void OnTriggerEnter (Collider coll) {
+		Debug.Log (coll.name);
+		if (coll.tag == "Hangar") {
+			Camera.main.transform.localPosition -= new Vector3 (0f, 2f,0f);
+		}
 	}
-
-
-	// Update is called once per frame
+	void OnTriggerExit (Collider coll) {
+		if (coll.tag == "Hangar") {
+			Camera.main.transform.localPosition += new Vector3 (0f, 2f,0f);
+		}
+	}
 	void Update () {
+
+		if (lifepoint <= 0)
+			ItIsTimeToDead();
 
 		if (Input.GetMouseButtonDown(0)) {
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -61,16 +68,11 @@ public class MayaScript : MonoBehaviour {
 		} else {
 			animator.SetBool("run", true);	
 		}
-
-		
-	//	GetComponent<LookAt>().lookAtTargetPosition = agent.steeringTarget + transform.forward;
-
 	}
 
 	
 	void OnAnimatorMove ()
 	{
-		// Update position to agent position
 		transform.position = agent.nextPosition;
 	}
 

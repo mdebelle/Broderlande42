@@ -1,8 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MayaScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/SpawnerScript.cs">
     <Files>
-      <File FileName="Assets/Scripts/MayaScript.cs" Line="76" Column="1" />
+      <File FileName="Assets/Scripts/MayaScript.cs" Line="61" Column="64" />
+      <File FileName="Assets/SpawnerScript.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
