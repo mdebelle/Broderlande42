@@ -25,9 +25,6 @@ public class LevelingScript : MonoBehaviour {
 		int tmp = currentXP + (currentXP * 25 / 100);
 		currentXP -= xpToNextLvl;
 		xpToNextLvl = tmp;
-		force += Random.Range(0, 3);
-		agi += 1;
-		con += Random.Range(1, 2);
 	}
 
 	void Update ()
@@ -37,12 +34,6 @@ public class LevelingScript : MonoBehaviour {
 		}
 		if (currentXP >= xpToNextLvl) {
 			LevelUp();
-			Debug.Log("Level: " + currentLevel);
-			Debug.Log("XP: " + currentXP);
-			Debug.Log("Next level: " + xpToNextLvl);
-			Debug.Log("FOR: " + force);
-			Debug.Log("AGI: " + agi);
-			Debug.Log("CON: " + con);
 		}
 	}
 }
