@@ -4,7 +4,9 @@
     <Files>
       <File FileName="Assets/Scripts/LootScripts.cs" Line="11" Column="3" />
       <File FileName="Assets/Scripts/Enemies.cs" Line="17" Column="10" />
-      <File FileName="Assets/Scripts/SpawnerScript.cs" Line="31" Column="16" />
+      <File FileName="Assets/Scripts/SpawnerScript.cs" Line="38" Column="51" />
+      <File FileName="Assets/ScaleParticle.cs" Line="18" Column="1" />
+      <File FileName="Assets/Scripts/MayaScript.cs" Line="73" Column="23" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

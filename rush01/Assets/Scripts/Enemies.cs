@@ -67,7 +67,7 @@ public class Enemies : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider coll) {
-		if (coll.tag == "Sword")
+		if (coll.tag == "Weapon")
 			lifepoint--;
 	}
 
