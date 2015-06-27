@@ -46,10 +46,15 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Elementals\Scripts\OrbitCamera.cs" />
+     <Compile Include="Assets\Elementals\Scripts\TestParticles.cs" />
      <Compile Include="Assets\Mixamo\Magic Pack\Demo\CameraScroll.cs" />
+     <Compile Include="Assets\ScaleParticle.cs" />
      <Compile Include="Assets\Scripts\Enemies.cs" />
+     <Compile Include="Assets\Scripts\LevelingScript.cs" />
      <Compile Include="Assets\Scripts\LootScripts.cs" />
      <Compile Include="Assets\Scripts\MayaScript.cs" />
+     <Compile Include="Assets\Scripts\SkillsScript.cs" />
      <Compile Include="Assets\Scripts\SpawnerScript.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
@@ -64,6 +69,7 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\TiltShiftHdrLensBlur.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\VignetteShader.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\DepthOfFieldScatter.shader" />
+     <None Include="Assets\Inventory\Credits + C#.txt" />
      <None Include="Assets\Standard Assets\Effects\TessellationShaders\Shaders\BumpedSpecularSmooth.shader" />
      <None Include="Assets\Standard Assets\Effects\Projectors\Guidelines.txt" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\MotionBlur.shader" />
@@ -88,6 +94,7 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ChromaticAberrationShader.shader" />
      <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\GlobalFog.shader" />
+     <None Include="Assets\Elementals\!Readme.txt" />
      <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Luminance.shader" />
      <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLit.shader" />
