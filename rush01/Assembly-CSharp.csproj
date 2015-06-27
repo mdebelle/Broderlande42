@@ -48,8 +48,10 @@
   <ItemGroup>
      <Compile Include="Assets\Mixamo\Magic Pack\Demo\CameraScroll.cs" />
      <Compile Include="Assets\Scripts\Enemies.cs" />
+     <Compile Include="Assets\Scripts\LevelingScript.cs" />
      <Compile Include="Assets\Scripts\LootScripts.cs" />
      <Compile Include="Assets\Scripts\MayaScript.cs" />
+     <Compile Include="Assets\Scripts\SkillsScript.cs" />
      <Compile Include="Assets\Scripts\SpawnerScript.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
