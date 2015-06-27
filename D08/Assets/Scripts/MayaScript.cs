@@ -18,6 +18,8 @@ public class MayaScript : MonoBehaviour {
 	string					EnnemyName;
 	GameObject				TmpEnemy;
 
+
+
 	void Start () {
 
 		cc 			= GetComponent<CharacterController> ();
@@ -27,7 +29,7 @@ public class MayaScript : MonoBehaviour {
 		lifepoint	= 100;
 
 		clickattack = false;
-
+		attacked	= false;
 	}
 
 	#region dead
@@ -62,11 +64,10 @@ public class MayaScript : MonoBehaviour {
 		}
 	}
 	void Update () {
-
 		if (lifepoint <= 0)
 			ItIsTimeToDead ();
 
-		if (Input.GetMouseButtonDown (0)) {
+		if (Input.GetMouseButtonDown (0) || Input.GetMouseButton (0)) {
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 			if (Physics.Raycast (ray.origin, ray.direction, out hitInfo)) {
 				agent.destination = hitInfo.point;
@@ -74,14 +75,29 @@ public class MayaScript : MonoBehaviour {
 					clickattack = true;
 					TmpEnemy = GameObject.Find (hitInfo.collider.name);
 					animator.SetBool ("attack", true);
-				}
-				else {
+				} else {
 					animator.SetBool ("attack", false);
 					clickattack = false;
 				}
 
 			}
-		}		
+		}
+//		animator.Play("HumanoidIdle");
+//		Debug.Log ();
+//		if ()
+//		{
+//			Debug.Log ("ouiiiii");
+//			animator.SetBool ("attack", false);
+//			clickattack = false;
+//			// Avoid any reload.
+//		}
+		if (Input.GetMouseButton (0)) {
+			Debug.Log ("click");
+			animator.SetBool ("click", true);
+		} else {
+			Debug.Log ("pas click");
+			animator.SetBool ("click", false);
+		}
 	
 		if (clickattack == true)
 			MayaAttack (hitInfo.collider);
@@ -95,7 +111,6 @@ public class MayaScript : MonoBehaviour {
 
 
 	void MayaAttack(Collider coll) {
-
 		dist = Mathf.Abs (Vector3.Distance (transform.position, hitInfo.transform.position));
 		if (dist > 1.5f) {
 			agent.destination = hitInfo.point;
@@ -104,12 +119,19 @@ public class MayaScript : MonoBehaviour {
 		} else {
 			agent.destination = transform.position;
 			animator.SetBool ("run", false);
-			animator.SetBool ("attack", true);
+			if (Input.GetMouseButton (0)){
+				animator.SetBool ("click", true);
+				animator.SetBool ("attack", true);
+			}
+			else {
+				animator.SetBool ("click", false);
+				animator.SetBool ("attack", false);
+			}
 		}
+
 		if (hitInfo.collider.GetComponent<Enemies> ().lifepoint == 0) {
 			clickattack = false;
 			animator.SetBool ("attack", false);
-
 		}
 	}
 	

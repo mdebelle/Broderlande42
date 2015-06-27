@@ -39,6 +39,7 @@ public class Enemies : MonoBehaviour {
 			animator.SetBool ("attack", false);
 
 			timetodead = Time.time;
+			
 			lifepoint--;
 		} else if (lifepoint < 0 && Time.time - timetodead > 3f) {
 			Debug.Log ("Dead");
