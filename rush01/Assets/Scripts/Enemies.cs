@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Enemies : MonoBehaviour {
 
@@ -12,6 +13,8 @@ public class Enemies : MonoBehaviour {
 	float					timetodead;
 	bool					attack = false;
 	float					timetoattack;
+
+	public List<LootScripts>		loots = new List<LootScripts> ();
 
 	float					distToMaya;
 
@@ -42,6 +45,8 @@ public class Enemies : MonoBehaviour {
 
 			lifepoint--;
 		} else if (lifepoint < 0 && Time.time - timetodead > 3f) {
+			Debug.Log ("Dead" + loots.Count);
+			Instantiate(loots[Random.Range(0,loots.Count)], transform.position, Quaternion.identity);
 			Destroy(gameObject);
 		}
 
