@@ -6,7 +6,7 @@ public class MayaScript : MonoBehaviour {
 
 	CharacterController 	cc;
 	Animator				animator;
-	
+
 	private NavMeshAgent	agent;
 	RaycastHit				hitInfo = new RaycastHit();
 
@@ -17,6 +17,7 @@ public class MayaScript : MonoBehaviour {
 	bool 					attacked;
 	string					EnnemyName;
 	GameObject				TmpEnemy;
+	int						xp = 0;
 
 
 
@@ -82,15 +83,7 @@ public class MayaScript : MonoBehaviour {
 
 			}
 		}
-//		animator.Play("HumanoidIdle");
-//		Debug.Log ();
-//		if ()
-//		{
-//			Debug.Log ("ouiiiii");
-//			animator.SetBool ("attack", false);
-//			clickattack = false;
-//			// Avoid any reload.
-//		}
+
 		if (Input.GetMouseButton (0)) {
 			Debug.Log ("click");
 			animator.SetBool ("click", true);
@@ -98,14 +91,14 @@ public class MayaScript : MonoBehaviour {
 			Debug.Log ("pas click");
 			animator.SetBool ("click", false);
 		}
-	
+
 		if (clickattack == true)
 			MayaAttack (hitInfo.collider);
 
 		if (agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0) {
 			animator.SetBool ("run", false);
 		} else {
-			animator.SetBool ("run", true);	
+			animator.SetBool ("run", true);
 		}
 	}
 
@@ -131,12 +124,12 @@ public class MayaScript : MonoBehaviour {
 
 		if (hitInfo.collider.GetComponent<Enemies> ().lifepoint == 0) {
 			clickattack = false;
+			xp += 5;
 			animator.SetBool ("attack", false);
 		}
 	}
-	
+
 	void OnAnimatorMove () {
 		transform.position = agent.nextPosition;
 	}
-
 }

@@ -2,14 +2,13 @@
 using System.Collections;
 
 public class Enemies : MonoBehaviour {
-	
+
 	Animator				animator;
-	
+
 	private NavMeshAgent	agent;
 
-	public GameObject		Maya;
+	private GameObject		Maya;
 	public int 				lifepoint;
-	bool					dead = false;
 	float					timetodead;
 	bool					attack = false;
 	float					timetoattack;
@@ -17,6 +16,7 @@ public class Enemies : MonoBehaviour {
 	float					distToMaya;
 
 	void Start () {
+		Maya = GameObject.Find("Maya");
 		animator = GetComponent<Animator>();
 		animator.SetBool("idle", false);
 		agent = GetComponent<NavMeshAgent>();
@@ -31,7 +31,7 @@ public class Enemies : MonoBehaviour {
 	}
 
 	void Update () {
-	
+
 		if (lifepoint == 0) {
 			animator.SetBool ("dead", true);
 			animator.SetBool ("idle", false);
@@ -39,22 +39,19 @@ public class Enemies : MonoBehaviour {
 			animator.SetBool ("attack", false);
 
 			timetodead = Time.time;
-			
+
 			lifepoint--;
 		} else if (lifepoint < 0 && Time.time - timetodead > 3f) {
-			Debug.Log ("Dead");
-				Destroy(gameObject);
+			Destroy(gameObject);
 		}
 
-		distToMaya = Mathf.Abs(Vector3.Distance(Maya.transform.position, transform.position));
-
 		if (lifepoint > 0) {
+			distToMaya = Mathf.Abs(Vector3.Distance(Maya.transform.position, transform.position));
 			if (distToMaya < 8f && distToMaya >= 1.5f) {
 				agent.destination = Maya.transform.position;
 				animator.SetBool ("attack", false);
 				animator.SetBool ("run", true);
 			} else {
-			
 				animator.SetBool ("run", false);
 				agent.destination = transform.position;
 				if (distToMaya < 1.5f) {
@@ -64,20 +61,13 @@ public class Enemies : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter(Collider coll){
-		Debug.Log (coll.tag);
+	void OnTriggerEnter(Collider coll) {
 		if (coll.tag == "Sword")
-			takeDamage ();
+			lifepoint--;
 	}
 
 	void OnAnimatorMove ()
 	{
-		// Update position to agent position
 		transform.position = agent.nextPosition;
 	}
-
-	public void takeDamage(){
-		lifepoint--;
-	}
-
 }
