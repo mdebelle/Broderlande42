@@ -32,15 +32,17 @@ public class LevelingScript : MonoBehaviour {
 
 	void Update ()
 	{
-		if (Input.GetKeyDown(KeyCode.L))
+		if (Input.GetKeyDown(KeyCode.L)) {
 			currentXP = currentXP + (xpToNextLvl - currentXP);
-		if (currentXP >= xpToNextLvl)
+		}
+		if (currentXP >= xpToNextLvl) {
 			LevelUp();
-		Debug.Log("Level: " + currentLevel);
-		Debug.Log("XP: " + currentXP);
-		Debug.Log("Next level: " + xpToNextLvl);
-		Debug.Log("FOR: " + force);
-		Debug.Log("AGI: " + agi);
-		Debug.Log("CON: " + con);
+			Debug.Log("Level: " + currentLevel);
+			Debug.Log("XP: " + currentXP);
+			Debug.Log("Next level: " + xpToNextLvl);
+			Debug.Log("FOR: " + force);
+			Debug.Log("AGI: " + agi);
+			Debug.Log("CON: " + con);
+		}
 	}
 }
