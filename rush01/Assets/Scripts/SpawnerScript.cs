@@ -22,7 +22,7 @@ public class SpawnerScript : MonoBehaviour {
 		newone = true;
 		smoke = true;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
@@ -34,16 +34,17 @@ public class SpawnerScript : MonoBehaviour {
 
 
 		if (smoke == true && newone == true && Time.time - timetoborn > 2f) {
-			Born.Play ();
+			if (Born)
+				Born.Play ();
 			smoke = false;
 		}
 
 		if (newone == true && Time.time - timetoborn > 4f) {
 			if (numberofSpawn < numberofEnnemies) {
-				Clone = Instantiate (Zombies[Random.Range(0,2)], transform.position, Quaternion.identity) as Enemies;
+				Clone = Instantiate (Zombies[Random.Range(0,1)], transform.position, Quaternion.identity) as Enemies;
 				numberofSpawn++;
 			} else if (numberofSpawn == numberofEnnemies) {
-				Clone = Instantiate (Zombies[2], transform.position, Quaternion.identity) as Enemies;
+				Clone = Instantiate (Zombies[1], transform.position, Quaternion.identity) as Enemies;
 				numberofSpawn++;
 			}
 			Clone.gameObject.SetActive(true);

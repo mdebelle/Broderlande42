@@ -1,73 +1,46 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class MayaScript : MonoBehaviour {
+	NavMeshAgent			agent;
+	RaycastHit				hit = new RaycastHit();
 
+	float					distToTarget;
+	float					ggtime = 0f;
+	BoxCollider				weaponHbox;
+	bool					targetLocked;
+	bool					hasToAttack;
+	bool					hasTarget = false;
 
-	CharacterController 	cc;
-	Animator				animator;
-
-	private NavMeshAgent	agent;
-	RaycastHit				hitInfo = new RaycastHit();
-
-
-	float					dist;
-	bool					clickattack;
-	float					timetoattack;
-	bool 					attacked;
-	string					EnnemyName;
-	GameObject				TmpEnemy;
-	int						xp = 0;
-	float					ggtime;
-	float					leveluptime;
-	
 	public AudioSource		ALevelUp;
 	public AudioSource		AGgstyle;
 
-	public int				Level;
+	public static MayaScript	instance;
+	public Animator				animator;
+	public MayaStats			Stats;
+
+	public GameObject			Weapon;
+
+	public Slider				healthBar;
+	public Slider				xpBar;
 
 
 	void Start () {
-
-		cc 			= GetComponent<CharacterController> ();
-		animator	= GetComponent<Animator>();
+		instance	= this;
 		agent		= GetComponent<NavMeshAgent>();
+		weaponHbox	= Weapon.GetComponent<BoxCollider>();
 
-		lifepoint	= 100;
-
-		clickattack = false;
-		attacked	= false;
-		ggtime 		= 0f;
-
-		Level 		= 3;
-
+		healthBar = healthBar.GetComponent<Slider>();
+		xpBar = xpBar.GetComponent<Slider>();
 	}
 
-	#region dead and health
-	
-	public int 				lifepoint;
-	public int 				lifepointmax;
-	float					timetodead;
-
-	void ItIsTimeToDead (){
-
-		if (lifepoint == 0) {
-			animator.SetBool ("dead", true);
-			timetodead = Time.time;
-			lifepoint--;
-		} else if (lifepoint < 0 && Time.time - timetodead > 3f) {
-			Destroy(gameObject);
-		}
-	}
-	
 	public void increasehealth(int value){
-		lifepoint += value;
-		if (lifepoint > lifepointmax) {
-			lifepoint = lifepointmax;
+		Stats.hp += value;
+		if (Stats.hp > Stats.hpMax) {
+			Stats.hp = Stats.hpMax;
 		}
 	}
-
-	#endregion
 
 
 	void OnTriggerEnter (Collider coll) {
@@ -81,48 +54,42 @@ public class MayaScript : MonoBehaviour {
 			Camera.main.transform.localPosition += new Vector3 (0f, 2f,0f);
 		}
 	}
+
+	IEnumerator MayaAttack()
+	{
+		distToTarget = Mathf.Abs (Vector3.Distance (transform.position, hit.transform.position));
+		if (distToTarget <= 1.5f)
+		{
+			agent.destination = transform.position;
+			animator.SetBool("run", false);
+			animator.SetBool("attack", true);
+			weaponHbox.enabled = true;
+			yield return new WaitForSeconds(0.5f);
+			hasToAttack = false;
+		}
+	}
+
 	void Update () {
+		healthBar.value = Stats.hp;
+		xpBar.value = Stats.currentXP;
 
-
-		if (Time.time - ggtime > 12.5f) {
-			animator.SetBool ("ggstyle", false);
-			AGgstyle.Stop ();
-		}
-		if (Input.GetKeyDown (KeyCode.L)) {
-			animator.SetBool ("ggstyle", true);
-			AGgstyle.Play ();
-			ggtime = Time.time;
-		}
-
-		if (lifepoint <= 0)
-			ItIsTimeToDead ();
-
-		if (Input.GetMouseButtonDown (0) || Input.GetMouseButton (0)) {
+		if (Input.GetMouseButtonDown (0)) {
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-			if (Physics.Raycast (ray.origin, ray.direction, out hitInfo)) {
-				agent.destination = hitInfo.point;
-				if (hitInfo.collider.tag == "Enemy") {
-					clickattack = true;
-					TmpEnemy = GameObject.Find (hitInfo.collider.name);
-					animator.SetBool ("attack", true);
+			if (Physics.Raycast (ray.origin, ray.direction, out hit)) {
+				agent.destination = hit.point;
+				if (hit.collider.tag == "Enemy") {
+					hasTarget = true;
+					hasToAttack = true;
 				} else {
-					animator.SetBool ("attack", false);
-					clickattack = false;
+					hasTarget = false;
+					hasToAttack = false;
+					animator.SetBool("attack", false);
+					animator.SetBool("run", true);
 				}
-
 			}
 		}
 
-		if (Input.GetMouseButton (0)) {
-			Debug.Log ("click");
-			animator.SetBool ("click", true);
-		} else {
-			Debug.Log ("pas click");
-			animator.SetBool ("click", false);
-		}
-
-		if (clickattack == true)
-			MayaAttack (hitInfo.collider);
+		targetLocked = Input.GetMouseButton(0);
 
 		if (agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0) {
 			animator.SetBool ("run", false);
@@ -130,41 +97,22 @@ public class MayaScript : MonoBehaviour {
 			animator.SetBool ("run", true);
 		}
 
-
-		if (Time.time - leveluptime > 2f && xp % 20 == 0) {
-			animator.SetBool ("LevelUp", true);
-			ALevelUp.Play ();
-			leveluptime = Time.time;
-		} else {
-			animator.SetBool ("LevelUp",false);
+		if (hasToAttack) {
+			StartCoroutine(MayaAttack());
 		}
-	}
-
-
-	void MayaAttack(Collider coll) {
-		dist = Mathf.Abs (Vector3.Distance (transform.position, hitInfo.transform.position));
-		if (dist > 1.5f) {
-			agent.destination = hitInfo.point;
-			animator.SetBool ("run", true);
+		else if (!targetLocked || (hasTarget && hit.collider.gameObject.GetComponent<Enemies>().hp <= 0)) {
 			animator.SetBool ("attack", false);
-		} else {
-			agent.destination = transform.position;
-			animator.SetBool ("run", false);
-			if (Input.GetMouseButton (0)){
-				animator.SetBool ("click", true);
-				animator.SetBool ("attack", true);
-			}
-			else {
-				animator.SetBool ("click", false);
-				animator.SetBool ("attack", false);
-			}
+			weaponHbox.enabled = false;
 		}
 
-		if (hitInfo.collider.GetComponent<Enemies> ().lifepoint == 0) {
-			clickattack = false;
-			xp += 5;
-			animator.SetBool ("attack", false);
-			Debug.Log (xp);
+		if (Time.time - ggtime > 12.5f) {
+			animator.SetBool ("ggstyle", false);
+			AGgstyle.Stop ();
+		}
+		if (Input.GetKeyDown (KeyCode.G)) {
+			animator.SetBool ("ggstyle", true);
+			AGgstyle.Play ();
+			ggtime = Time.time;
 		}
 	}
 
