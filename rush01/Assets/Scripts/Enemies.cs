@@ -19,6 +19,8 @@ public class Enemies : MonoBehaviour {
 
 	public CharacterController	hitbox;
 
+	float secsToHit = 1.45f;
+
 	int							level;
 
 	void Awake () {
@@ -43,7 +45,7 @@ public class Enemies : MonoBehaviour {
 		hitbox.enabled = false;
 		yield return new WaitForSeconds(4.0f);
 		if (Random.Range(0,8) < loots.Count)
-			Instantiate(loots[Random.Range(0,loots.Count)], transform.position, Quaternion.identity);
+		Instantiate(loots[Random.Range(0,loots.Count)], transform.position, Quaternion.identity);
 		Destroy(gameObject);
 	}
 
@@ -61,8 +63,17 @@ public class Enemies : MonoBehaviour {
 			} else {
 				animator.SetBool ("run", false);
 				agent.destination = transform.position;
-				if (distToMaya < 1.5f) {
+				if (distToMaya < 1.5f)
 					animator.SetBool ("attack", true);
+				secsToHit -= Time.smoothDeltaTime;
+				if (secsToHit <= 0)
+				{
+					secsToHit = 1.45f;
+					Debug.Log(secsToHit);
+					distToMaya = Mathf.Abs(Vector3.Distance(Maya.transform.position, transform.position));
+					if (distToMaya < 1.5f) {
+						Maya.takeDamage();
+					}
 				}
 			}
 		}
@@ -76,7 +87,8 @@ public class Enemies : MonoBehaviour {
 				Aattack.Play ();
 				hp -= Maya.Stats.force;
 				if (hp <= 0) {
-					Maya.Stats.currentXP += level * 5;
+					int xpGain = 42 * level / 7;
+					Maya.Stats.currentXP += xpGain;
 				}
 			}
 			else {

@@ -7,7 +7,7 @@ public class MayaScript : MonoBehaviour {
 	RaycastHit				hit = new RaycastHit();
 
 	float					distToTarget;
-	float					ggtime = 0f;
+	float					ggtime = 12.5f;
 	BoxCollider				weaponHbox;
 	bool					targetLocked;
 	bool					hasToAttack;
@@ -15,6 +15,7 @@ public class MayaScript : MonoBehaviour {
 
 	public AudioSource		ALevelUp;
 	public AudioSource		AGgstyle;
+	public AudioSource		AMainMusic;
 
 	public static MayaScript	instance;
 	public Animator				animator;
@@ -42,6 +43,14 @@ public class MayaScript : MonoBehaviour {
 		}
 	}
 
+	public void takeDamage()
+	{
+		if (Random.Range(0, 100) <= (100 - 2 * Stats.agi))
+		{
+			int dmg = Stats.level - (Stats.con / 2);
+			Stats.hp -= dmg;
+		}
+	}
 
 	void OnTriggerEnter (Collider coll) {
 		Debug.Log (coll.name);
@@ -69,9 +78,31 @@ public class MayaScript : MonoBehaviour {
 		}
 	}
 
+	IEnumerator MayaIsDying()
+	{
+		animator.SetBool("dead", true);
+		yield return new WaitForSeconds(4.0f);
+		Application.LoadLevel("skills");
+	}
+
+	IEnumerator gangnamStyle()
+	{
+		animator.SetBool ("ggstyle", true);
+		AMainMusic.Stop();
+		AGgstyle.Play ();
+		yield return new WaitForSeconds(ggtime);
+		AGgstyle.Stop ();
+		AMainMusic.Play();
+		animator.SetBool ("ggstyle", false);
+	}
+
 	void Update () {
 		healthBar.value = Stats.hp;
 		xpBar.value = Stats.currentXP;
+
+		if (Stats.hp <= 0) {
+			StartCoroutine(MayaIsDying());
+		}
 
 		if (Input.GetMouseButtonDown (0)) {
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
@@ -105,19 +136,12 @@ public class MayaScript : MonoBehaviour {
 			weaponHbox.enabled = false;
 		}
 
-		if (Time.time - ggtime > 12.5f) {
-			animator.SetBool ("ggstyle", false);
-			AGgstyle.Stop ();
-		}
 		if (Input.GetKeyDown (KeyCode.G)) {
-			animator.SetBool ("ggstyle", true);
-			AGgstyle.Play ();
-			ggtime = Time.time;
+			StartCoroutine(gangnamStyle());
 		}
 	}
 
 	void OnAnimatorMove () {
 		transform.position = agent.nextPosition;
 	}
-
 }
