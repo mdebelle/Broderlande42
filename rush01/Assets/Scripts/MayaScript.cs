@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MayaScript : MonoBehaviour {
 	NavMeshAgent			agent;
@@ -25,11 +26,14 @@ public class MayaScript : MonoBehaviour {
 
 	public Slider				healthBar;
 	public Slider				xpBar;
+	
+	List<Weapons>				LWeapons = new List<Weapons>();
 
 
 	void Start () {
 		instance	= this;
 		agent		= GetComponent<NavMeshAgent>();
+		Weapon = GameObject.Find ("W_SwordGame");
 		weaponHbox	= Weapon.GetComponent<BoxCollider>();
 
 		healthBar = healthBar.GetComponent<Slider>();
@@ -66,6 +70,12 @@ public class MayaScript : MonoBehaviour {
 			increasehealth(coll.GetComponent<LootScripts>().hp * Stats.hpMax / 100);
 			Destroy(coll.gameObject);
 		}
+
+		if (coll.tag == "Weapon") {
+			LWeapons.Add (coll.gameObject.GetComponent<Weapons>());
+
+		}
+
 
 	}
 	void OnTriggerExit (Collider coll) {
@@ -153,8 +163,61 @@ public class MayaScript : MonoBehaviour {
 				StopCoroutine(gangnamStyle());
 			}
 		}
+		if (Input.GetKeyDown (KeyCode.LeftShift)) {
+			equipMaya();
+		}
+
 	}
 
+	void equipMaya (){
+	
+		if (LWeapons.Count > 1) {
+			for (int i = 0; i < LWeapons.Count; i++){
+				if (i < LWeapons.Count) {
+					if (LWeapons[i].GetComponent<Weapons>().equiped == true) {
+						LWeapons[i].GetComponent<Weapons>().equiped = false;
+						LWeapons[i + 1].GetComponent<Weapons>().equiped = true;
+						if (LWeapons[i + 1].GetComponent<Weapons>().name == "Sabre"){
+							GameObject.Find("W_Sabre").SetActive(true);
+							GameObject.Find("W_SwordGame").SetActive(false);
+							GameObject.Find("W_Longclaw").SetActive(false);
+						}
+						else if (LWeapons[i + 1].GetComponent<Weapons>().name == "SwordGame"){
+							GameObject.Find("W_Sabre").SetActive(false);
+							GameObject.Find("W_SwordGame").SetActive(true);
+							GameObject.Find("W_Longclaw").SetActive(false);
+						}
+						else if (LWeapons[i + 1].GetComponent<Weapons>().name == "Longclaw"){
+							GameObject.Find("W_Sabre").SetActive(true);
+							GameObject.Find("W_SwordGame").SetActive(false);
+							GameObject.Find("W_Longclaw").SetActive(false);
+						}
+						break;
+					}
+				}
+				else {
+					LWeapons[i].GetComponent<Weapons>().equiped = false;
+					LWeapons[0].GetComponent<Weapons>().equiped = true;
+					if (LWeapons[0].GetComponent<Weapons>().name == "Sabre"){
+						GameObject.Find("W1").SetActive(true);
+						GameObject.Find("W2").SetActive(false);
+						GameObject.Find("W3").SetActive(false);
+					}
+					else if (LWeapons[0].GetComponent<Weapons>().name == "SwordGame"){
+						GameObject.Find("W1").SetActive(false);
+						GameObject.Find("W2").SetActive(true);
+						GameObject.Find("W3").SetActive(false);
+					}
+					else if (LWeapons[0].GetComponent<Weapons>().name == "Longclaw"){
+						GameObject.Find("W1").SetActive(true);
+						GameObject.Find("W2").SetActive(false);
+						GameObject.Find("W3").SetActive(false);
+					}
+				}
+			}
+		}
+	}
+	
 	void OnAnimatorMove () {
 		transform.position = agent.nextPosition;
 	}
