@@ -37,6 +37,9 @@ public class MayaScript : MonoBehaviour {
 	}
 
 	public void increasehealth(int value){
+
+		Debug.Log ("Je vais mieux");
+
 		Stats.hp += value;
 		if (Stats.hp > Stats.hpMax) {
 			Stats.hp = Stats.hpMax;
@@ -57,6 +60,13 @@ public class MayaScript : MonoBehaviour {
 		if (coll.tag == "Hangar") {
 			Camera.main.transform.localPosition -= new Vector3 (0f, 2f,0f);
 		}
+
+		if (coll.tag == "Bonus") {
+			Debug.Log ("je vais mieux");
+			increasehealth(coll.GetComponent<LootScripts>().hp * Stats.hpMax / 100);
+			Destroy(coll.gameObject);
+		}
+
 	}
 	void OnTriggerExit (Collider coll) {
 		if (coll.tag == "Hangar") {

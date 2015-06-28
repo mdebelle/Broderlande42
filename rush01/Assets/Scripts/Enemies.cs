@@ -9,7 +9,7 @@ public class Enemies : MonoBehaviour {
 
 	private NavMeshAgent		agent;
 
-	private string[]			renames = {"Xavier Niel", "Nicolas Sadiraque", "Kwame", "Butcher", "Oll", "Thør"};
+	private string[]			renames = {"Xavier Niel", "Nicolas Sadirac", "Kwame", "Butcher", "Ol", "Thør"};
 	private float				distToMaya;
 	private MayaScript			Maya;
 
@@ -32,9 +32,8 @@ public class Enemies : MonoBehaviour {
 		agent = GetComponent<NavMeshAgent>();
 		hp = Maya.Stats.level * 3;
 		hitbox = GetComponent<CharacterController>();
-		
-		name = renames[Random.Range(0, 5)];
-		EName.GetComponent<Text>().text = name;
+
+		EName.GetComponent<Text>().text = renames[Random.Range(0, 6)];
 
 		level = Maya.Stats.level;
 

@@ -14,23 +14,24 @@ public class LootScripts : MonoBehaviour {
 
 	}
 
-	void OntriggerEnter(Collider coll){
-		if (gameObject.tag == "Bonus" && coll.gameObject.tag == "Maya") {
-			coll.gameObject.GetComponent<MayaScript>().increasehealth(maya.Stats.hpMax * hp / 100);
-			Destroy (gameObject);
-		}
-		// Peut-etre changer le script de collision ennemie/weapon
-	//	if (gameObject.tag == "Weapon" && coll.gameObject.tag == "Enemies") {
-	//		coll.gameObject.GetComponent<MayaScript>().takeDamage(hp);
-	//	}
-		
-	}
+//	void OnTriggerEnter(Collider coll){
+//
+//		Debug.Log ("Loot");
+//
+//		if (gameObject.tag == "Bonus" && coll.gameObject.tag == "Maya") {
+//			coll.gameObject.GetComponent<MayaScript>().increasehealth(maya.Stats.hpMax * hp / 100);
+//			Destroy (gameObject);
+//		}
+//		// Peut-etre changer le script de collision ennemie/weapon
+//	//	if (gameObject.tag == "Weapon" && coll.gameObject.tag == "Enemies") {
+//	//		coll.gameObject.GetComponent<MayaScript>().takeDamage(hp);
+//	//	}
+//		
+//	}
 
 
 	void Awake () {
 
-		if (gameObject.tag == "Bonus") {
-		}
 
 	}
 
