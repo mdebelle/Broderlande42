@@ -17,14 +17,14 @@ public class SpawnerScript : MonoBehaviour {
 	public int				numberofEnnemies = 10;
 	int						numberofSpawn = 0;
 
-	MayaScript maya;
+	MayaScript				maya;
 
 
 	// Use this for initialization
 	void Start () {
 		newone = true;
 		smoke = true;
-		maya = MayaScript.instance;
+		maya = GameObject.Find("Maya").GetComponent<MayaScript>();
 	}
 
 	// Update is called once per frame

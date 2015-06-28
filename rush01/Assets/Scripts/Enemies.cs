@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class Enemies : MonoBehaviour {
 
@@ -18,7 +19,8 @@ public class Enemies : MonoBehaviour {
 	public AudioSource			Aattack;
 
 	public CharacterController	hitbox;
-
+	
+	public Text					EName;
 	float secsToHit = 1.45f;
 
 	int							level;
@@ -30,8 +32,9 @@ public class Enemies : MonoBehaviour {
 		agent = GetComponent<NavMeshAgent>();
 		hp = Maya.Stats.level * 3;
 		hitbox = GetComponent<CharacterController>();
-
+		
 		name = renames[Random.Range(0, 5)];
+		EName.GetComponent<Text>().text = name;
 
 		level = Maya.Stats.level;
 

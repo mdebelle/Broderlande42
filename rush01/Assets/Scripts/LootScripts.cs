@@ -5,16 +5,18 @@ public class LootScripts : MonoBehaviour {
 
 
 	public int 		hp;  // damage for a weapon health or xp fo bonus
-
+	MayaScript		maya;
 
 	// Use this for initialization
 	void Start () {
+
+		maya = GameObject.Find("Maya").GetComponent<MayaScript>();
 
 	}
 
 	void OntriggerEnter(Collider coll){
 		if (gameObject.tag == "Bonus" && coll.gameObject.tag == "Maya") {
-			coll.gameObject.GetComponent<MayaScript>().increasehealth(hp);
+			coll.gameObject.GetComponent<MayaScript>().increasehealth(maya.Stats.hpMax * hp / 100);
 			Destroy (gameObject);
 		}
 		// Peut-etre changer le script de collision ennemie/weapon
