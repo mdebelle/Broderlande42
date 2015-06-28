@@ -102,7 +102,7 @@ public class MayaScript : MonoBehaviour {
 	{
 		animator.SetBool("dead", true);
 		yield return new WaitForSeconds(4.0f);
-		Application.LoadLevel("skills");
+		Application.LoadLevel("Level1");
 	}
 
 	IEnumerator gangnamStyle()
