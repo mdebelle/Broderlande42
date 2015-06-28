@@ -17,6 +17,8 @@ public class Enemies : MonoBehaviour {
 	public List<LootScripts>		loots = new List<LootScripts> ();
 
 	float					distToMaya;
+	public AudioSource		AHeart;
+	public AudioSource		Aattack;
 
 	void Start () {
 		Maya = GameObject.Find("Maya");
@@ -24,6 +26,7 @@ public class Enemies : MonoBehaviour {
 		animator.SetBool("idle", false);
 		agent = GetComponent<NavMeshAgent>();
 		lifepoint = 3;
+		AHeart.Play ();
 	}
 
 	void Awake () {
@@ -46,7 +49,9 @@ public class Enemies : MonoBehaviour {
 			lifepoint--;
 		} else if (lifepoint < 0 && Time.time - timetodead > 3f) {
 			Debug.Log ("Dead" + loots.Count);
-			Instantiate(loots[Random.Range(0,loots.Count)], transform.position, Quaternion.identity);
+
+			if (Random.Range(0,8) < loots.Count)
+				Instantiate(loots[Random.Range(0,loots.Count)], transform.position, Quaternion.identity);
 			Destroy(gameObject);
 		}
 
@@ -68,6 +73,7 @@ public class Enemies : MonoBehaviour {
 
 	void OnTriggerEnter(Collider coll) {
 		if (coll.tag == "Weapon")
+			Aattack.Play ();
 			lifepoint--;
 	}
 

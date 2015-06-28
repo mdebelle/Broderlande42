@@ -8,6 +8,11 @@ public class LootScripts : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		if (gameObject.tag == "Weapon") {
+			transform.position += new Vector3(0,1f,0);
+		}
+
 	}
 	
 	void Awake () {

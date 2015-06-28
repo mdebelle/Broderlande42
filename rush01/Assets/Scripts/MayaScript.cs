@@ -18,7 +18,10 @@ public class MayaScript : MonoBehaviour {
 	string					EnnemyName;
 	GameObject				TmpEnemy;
 	int						xp = 0;
+	float					ggtime;
+	float					leveluptime;
 
+	public AudioSource		ALevelUp;
 
 
 	void Start () {
@@ -31,6 +34,7 @@ public class MayaScript : MonoBehaviour {
 
 		clickattack = false;
 		attacked	= false;
+		ggtime = 0f;
 	}
 
 	#region dead
@@ -65,6 +69,15 @@ public class MayaScript : MonoBehaviour {
 		}
 	}
 	void Update () {
+
+
+		if (Time.time - ggtime > 3f)
+			animator.SetBool ("ggstyle", false);
+		if (Input.GetKeyDown (KeyCode.L)) {
+			animator.SetBool ("ggstyle", true);
+			ggtime = Time.time;
+		}
+
 		if (lifepoint <= 0)
 			ItIsTimeToDead ();
 
@@ -100,6 +113,14 @@ public class MayaScript : MonoBehaviour {
 		} else {
 			animator.SetBool ("run", true);
 		}
+
+
+		if (Time.time - leveluptime > 2f &&  xp > 20) {
+			animator.SetBool ("LevelUp", true);
+			ALevelUp.Play ();
+			leveluptime = Time.time;
+		}
+
 	}
 
 
@@ -126,6 +147,7 @@ public class MayaScript : MonoBehaviour {
 			clickattack = false;
 			xp += 5;
 			animator.SetBool ("attack", false);
+			Debug.Log (xp);
 		}
 	}
 
