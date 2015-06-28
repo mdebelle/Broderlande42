@@ -4,9 +4,10 @@ using System.Collections.Generic;
 
 public class SpawnerScript : MonoBehaviour {
 
-
+	
 	public List<Enemies>	Zombies = new List<Enemies>();
 	Enemies					Clone;
+	public Enemies			MidBoss;
 
 	float					timetoborn;
 	bool					newone;
@@ -16,11 +17,14 @@ public class SpawnerScript : MonoBehaviour {
 	public int				numberofEnnemies = 10;
 	int						numberofSpawn = 0;
 
+	MayaScript maya;
+
 
 	// Use this for initialization
 	void Start () {
 		newone = true;
 		smoke = true;
+		maya = MayaScript.instance;
 	}
 
 	// Update is called once per frame
@@ -41,10 +45,13 @@ public class SpawnerScript : MonoBehaviour {
 
 		if (newone == true && Time.time - timetoborn > 4f) {
 			if (numberofSpawn < numberofEnnemies) {
-				Clone = Instantiate (Zombies[Random.Range(0,1)], transform.position, Quaternion.identity) as Enemies;
+				if (maya.Stats.level < 10)
+					Clone = Instantiate (Zombies[Random.Range(0,1)], transform.position, Quaternion.identity) as Enemies;
+				else
+					Clone = Instantiate (Zombies[Random.Range(0,2)], transform.position, Quaternion.identity) as Enemies;
 				numberofSpawn++;
 			} else if (numberofSpawn == numberofEnnemies) {
-				Clone = Instantiate (Zombies[1], transform.position, Quaternion.identity) as Enemies;
+				Clone = Instantiate (MidBoss, transform.position, Quaternion.identity) as Enemies;
 				numberofSpawn++;
 			}
 			Clone.gameObject.SetActive(true);
