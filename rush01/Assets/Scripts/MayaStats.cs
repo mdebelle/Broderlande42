@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MayaStats : MonoBehaviour {
 	public int currentXP = 0;
@@ -24,6 +25,8 @@ public class MayaStats : MonoBehaviour {
 
 	public int	statPoints = 0;
 
+	public List<Button> statList = new List<Button>();
+
 	int nextLevelFormula()
 	{
 		return (5 * level * level * level / 4);
@@ -43,10 +46,6 @@ public class MayaStats : MonoBehaviour {
 		conInfos = conInfos.GetComponent<Text>();
 		statPointsInfos = statPointsInfos.GetComponent<Text>();
 		levelInfos.text = "  " + level.ToString();
-	}
-
-	void UpdateInfos()
-	{
 		forInfos.text = force.ToString();
 		agiInfos.text = agi.ToString();
 		conInfos.text = con.ToString();
@@ -55,6 +54,9 @@ public class MayaStats : MonoBehaviour {
 	void LevelUp ()
 	{
 		level++;
+		if (statPoints == 0) {
+			changeUpButtonsEnabled(true);
+		}
 		statPoints += 5;
 		Debug.Log("Level up ! Current level: " + level);
 		currentXP -= xpToNextLvl;
@@ -67,9 +69,45 @@ public class MayaStats : MonoBehaviour {
 		statPointsInfos.text = "  " + statPoints.ToString();
 	}
 
+	void changeUpButtonsEnabled(bool mEnabled)
+	{
+		for (int i = 0; i < statList.Count; i++) {
+			statList[i].GetComponent<Button>().enabled = mEnabled;
+		}
+	}
+
+	public void upForce()
+	{
+		force++;
+		forInfos.text = force.ToString();
+		statPoints--;
+		if (statPoints == 0) {
+			changeUpButtonsEnabled(false);
+		}
+	}
+
+	public void upCon()
+	{
+		con++;
+		conInfos.text = con.ToString();
+		statPoints--;
+		if (statPoints == 0) {
+			changeUpButtonsEnabled(false);
+		}
+	}
+
+	public void upAgi()
+	{
+		agi++;
+		agiInfos.text = agi.ToString();
+		statPoints--;
+		if (statPoints == 0) {
+			changeUpButtonsEnabled(false);
+		}
+	}
+
 	void Update ()
 	{
-		UpdateInfos();
 		if (Input.GetKeyDown(KeyCode.L)) {
 			currentXP = currentXP + (xpToNextLvl - currentXP);
 		}

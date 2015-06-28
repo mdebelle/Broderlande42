@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\ScaleParticle.cs" />
      <Compile Include="Assets\Scripts\SkillsScript.cs" />
      <Compile Include="Assets\Scripts\SpawnerScript.cs" />
+     <Compile Include="Assets\Scripts\StatsPanelScript.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
