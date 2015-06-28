@@ -4,58 +4,57 @@ using System.Collections.Generic;
 
 public class Enemies : MonoBehaviour {
 
-	Animator				animator;
+	Animator					animator;
 
-	private NavMeshAgent	agent;
+	private NavMeshAgent		agent;
 
-	private GameObject		Maya;
-	public int 				lifepoint;
-	float					timetodead;
-	bool					attack = false;
-	float					timetoattack;
+	private string[]			renames = {"Xavier Niel", "Nicolas Sadiraque", "Kwame", "Butcher", "Oll", "Thør"};
+	private float				distToMaya;
+	private MayaScript			Maya;
 
-	public List<LootScripts>		loots = new List<LootScripts> ();
+	public int 					hp;
+	public List<LootScripts>	loots = new List<LootScripts> ();
+	public AudioSource			AHeart;
+	public AudioSource			Aattack;
 
-	float					distToMaya;
-	public AudioSource		AHeart;
-	public AudioSource		Aattack;
+	public CharacterController	hitbox;
 
-	void Start () {
-		Maya = GameObject.Find("Maya");
+	float secsToHit = 1.45f;
+
+	int							level;
+
+	void Awake () {
+		Maya = GameObject.Find("Maya").GetComponent<MayaScript>();
 		animator = GetComponent<Animator>();
 		animator.SetBool("idle", false);
 		agent = GetComponent<NavMeshAgent>();
-		lifepoint = 3;
+		hp = Maya.Stats.level * 3;
+		hitbox = GetComponent<CharacterController>();
+
+		name = renames[Random.Range(0, 5)];
+
+		level = Maya.Stats.level;
+
 		AHeart.Play ();
 	}
 
-	void Awake () {
-		animator = GetComponent<Animator>();
-		animator.SetBool("idle", false);
-		agent = GetComponent<NavMeshAgent>();
-		lifepoint = 3;
+	IEnumerator isDying()
+	{
+		animator.SetBool ("dead", true);
+		Debug.Log ("Dead" + loots.Count);
+		hitbox.enabled = false;
+		yield return new WaitForSeconds(4.0f);
+		if (Random.Range(0,8) < loots.Count)
+		Instantiate(loots[Random.Range(0,loots.Count)], transform.position, Quaternion.identity);
+		Destroy(gameObject);
 	}
 
 	void Update () {
-
-		if (lifepoint == 0) {
-			animator.SetBool ("dead", true);
-			animator.SetBool ("idle", false);
-			animator.SetBool ("run", false);
-			animator.SetBool ("attack", false);
-
-			timetodead = Time.time;
-
-			lifepoint--;
-		} else if (lifepoint < 0 && Time.time - timetodead > 3f) {
-			Debug.Log ("Dead" + loots.Count);
-
-			if (Random.Range(0,8) < loots.Count)
-				Instantiate(loots[Random.Range(0,loots.Count)], transform.position, Quaternion.identity);
-			Destroy(gameObject);
+		if (hp <= 0) {
+			StartCoroutine(isDying());
 		}
 
-		if (lifepoint > 0) {
+		if (hp > 0) {
 			distToMaya = Mathf.Abs(Vector3.Distance(Maya.transform.position, transform.position));
 			if (distToMaya < 8f && distToMaya >= 1.5f) {
 				agent.destination = Maya.transform.position;
@@ -64,8 +63,17 @@ public class Enemies : MonoBehaviour {
 			} else {
 				animator.SetBool ("run", false);
 				agent.destination = transform.position;
-				if (distToMaya < 1.5f) {
+				if (distToMaya < 1.5f)
 					animator.SetBool ("attack", true);
+				secsToHit -= Time.smoothDeltaTime;
+				if (secsToHit <= 0)
+				{
+					secsToHit = 1.45f;
+					Debug.Log(secsToHit);
+					distToMaya = Mathf.Abs(Vector3.Distance(Maya.transform.position, transform.position));
+					if (distToMaya < 1.5f) {
+						Maya.takeDamage();
+					}
 				}
 			}
 		}
@@ -73,8 +81,20 @@ public class Enemies : MonoBehaviour {
 
 	void OnTriggerEnter(Collider coll) {
 		if (coll.tag == "Weapon")
-			Aattack.Play ();
-			lifepoint--;
+		{
+			if (Random.Range(0, 100) <= Maya.Stats.prec) {
+				Debug.Log("Touché !");
+				Aattack.Play ();
+				hp -= Maya.Stats.force;
+				if (hp <= 0) {
+					int xpGain = 42 * level / 7;
+					Maya.Stats.currentXP += xpGain;
+				}
+			}
+			else {
+				Debug.Log("Missed ...");
+			}
+		}
 	}
 
 	void OnAnimatorMove ()

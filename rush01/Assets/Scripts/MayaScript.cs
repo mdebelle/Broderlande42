@@ -1,61 +1,56 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class MayaScript : MonoBehaviour {
+	NavMeshAgent			agent;
+	RaycastHit				hit = new RaycastHit();
 
-
-	CharacterController 	cc;
-	Animator				animator;
-
-	private NavMeshAgent	agent;
-	RaycastHit				hitInfo = new RaycastHit();
-
-
-	float					dist;
-	bool					clickattack;
-	float					timetoattack;
-	bool 					attacked;
-	string					EnnemyName;
-	GameObject				TmpEnemy;
-	int						xp = 0;
-	float					ggtime;
-	float					leveluptime;
+	float					distToTarget;
+	float					ggtime = 12.5f;
+	BoxCollider				weaponHbox;
+	bool					targetLocked;
+	bool					hasToAttack;
+	bool					hasTarget = false;
 
 	public AudioSource		ALevelUp;
+	public AudioSource		AGgstyle;
+	public AudioSource		AMainMusic;
+
+	public static MayaScript	instance;
+	public Animator				animator;
+	public MayaStats			Stats;
+
+	public GameObject			Weapon;
+
+	public Slider				healthBar;
+	public Slider				xpBar;
 
 
 	void Start () {
-
-		cc 			= GetComponent<CharacterController> ();
-		animator	= GetComponent<Animator>();
+		instance	= this;
 		agent		= GetComponent<NavMeshAgent>();
+		weaponHbox	= Weapon.GetComponent<BoxCollider>();
 
-		lifepoint	= 100;
-
-		clickattack = false;
-		attacked	= false;
-		ggtime = 0f;
+		healthBar = healthBar.GetComponent<Slider>();
+		xpBar = xpBar.GetComponent<Slider>();
 	}
 
-	#region dead
-
-	public int 				lifepoint;
-	float					timetodead;
-
-	void ItIsTimeToDead (){
-
-		if (lifepoint == 0) {
-			animator.SetBool ("dead", true);
-			timetodead = Time.time;
-			lifepoint--;
-		} else if (lifepoint < 0 && Time.time - timetodead > 3f) {
-			Destroy(gameObject);
+	public void increasehealth(int value){
+		Stats.hp += value;
+		if (Stats.hp > Stats.hpMax) {
+			Stats.hp = Stats.hpMax;
 		}
-
 	}
 
-	#endregion
-
+	public void takeDamage()
+	{
+		if (Random.Range(0, 100) <= (100 - 2 * Stats.agi))
+		{
+			int dmg = Stats.level - (Stats.con / 2);
+			Stats.hp -= dmg;
+		}
+	}
 
 	void OnTriggerEnter (Collider coll) {
 		Debug.Log (coll.name);
@@ -68,87 +63,85 @@ public class MayaScript : MonoBehaviour {
 			Camera.main.transform.localPosition += new Vector3 (0f, 2f,0f);
 		}
 	}
-	void Update () {
 
-
-		if (Time.time - ggtime > 3f)
-			animator.SetBool ("ggstyle", false);
-		if (Input.GetKeyDown (KeyCode.L)) {
-			animator.SetBool ("ggstyle", true);
-			ggtime = Time.time;
-		}
-
-		if (lifepoint <= 0)
-			ItIsTimeToDead ();
-
-		if (Input.GetMouseButtonDown (0) || Input.GetMouseButton (0)) {
-			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-			if (Physics.Raycast (ray.origin, ray.direction, out hitInfo)) {
-				agent.destination = hitInfo.point;
-				if (hitInfo.collider.tag == "Enemy") {
-					clickattack = true;
-					TmpEnemy = GameObject.Find (hitInfo.collider.name);
-					animator.SetBool ("attack", true);
-				} else {
-					animator.SetBool ("attack", false);
-					clickattack = false;
-				}
-
-			}
-		}
-
-		if (Input.GetMouseButton (0)) {
-			Debug.Log ("click");
-			animator.SetBool ("click", true);
-		} else {
-			Debug.Log ("pas click");
-			animator.SetBool ("click", false);
-		}
-
-		if (clickattack == true)
-			MayaAttack (hitInfo.collider);
-
-		if (agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0) {
-			animator.SetBool ("run", false);
-		} else {
-			animator.SetBool ("run", true);
-		}
-
-
-		if (Time.time - leveluptime > 2f && xp % 20 == 0) {
-			animator.SetBool ("LevelUp", true);
-			ALevelUp.Play ();
-			leveluptime = Time.time;
-		} else {
-			animator.SetBool ("LevelUp",false);
+	IEnumerator MayaAttack()
+	{
+		distToTarget = Mathf.Abs (Vector3.Distance (transform.position, hit.transform.position));
+		if (distToTarget <= 1.5f)
+		{
+			agent.destination = transform.position;
+			animator.SetBool("run", false);
+			animator.SetBool("attack", true);
+			weaponHbox.enabled = true;
+			yield return new WaitForSeconds(0.5f);
+			hasToAttack = false;
 		}
 	}
 
+	IEnumerator MayaIsDying()
+	{
+		animator.SetBool("dead", true);
+		yield return new WaitForSeconds(4.0f);
+		Application.LoadLevel("skills");
+	}
 
-	void MayaAttack(Collider coll) {
-		dist = Mathf.Abs (Vector3.Distance (transform.position, hitInfo.transform.position));
-		if (dist > 1.5f) {
-			agent.destination = hitInfo.point;
-			animator.SetBool ("run", true);
-			animator.SetBool ("attack", false);
-		} else {
+	IEnumerator gangnamStyle()
+	{
+		animator.SetBool ("ggstyle", true);
+		AMainMusic.Stop();
+		AGgstyle.Play ();
+		yield return new WaitForSeconds(ggtime);
+		AGgstyle.Stop ();
+		AMainMusic.Play();
+		animator.SetBool ("ggstyle", false);
+	}
+
+	void Update () {
+		healthBar.value = Stats.hp;
+		xpBar.value = Stats.currentXP;
+
+		if (Stats.hp <= 0) {
 			agent.destination = transform.position;
-			animator.SetBool ("run", false);
-			if (Input.GetMouseButton (0)){
-				animator.SetBool ("click", true);
-				animator.SetBool ("attack", true);
-			}
-			else {
-				animator.SetBool ("click", false);
-				animator.SetBool ("attack", false);
-			}
+			StartCoroutine(MayaIsDying());
 		}
+		else {
+			if (Input.GetMouseButtonDown (0)) {
+				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+				if (Physics.Raycast (ray.origin, ray.direction, out hit)) {
+					agent.destination = hit.point;
+					if (hit.collider.tag == "Enemy") {
+						hasTarget = true;
+						hasToAttack = true;
+					} else {
+						hasTarget = false;
+						hasToAttack = false;
+						animator.SetBool("attack", false);
+						animator.SetBool("run", true);
+					}
+				}
+			}
 
-		if (hitInfo.collider.GetComponent<Enemies> ().lifepoint == 0) {
-			clickattack = false;
-			xp += 5;
-			animator.SetBool ("attack", false);
-			Debug.Log (xp);
+			targetLocked = Input.GetMouseButton(0);
+
+			if (agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0) {
+				animator.SetBool ("run", false);
+			} else {
+				animator.SetBool ("run", true);
+			}
+
+			if (hasToAttack) {
+				StartCoroutine(MayaAttack());
+				StopCoroutine(MayaAttack());
+			}
+			else if (!targetLocked || (hasTarget && hit.collider.gameObject.GetComponent<Enemies>().hp <= 0)) {
+				animator.SetBool ("attack", false);
+				weaponHbox.enabled = false;
+			}
+
+			if (Input.GetKeyDown (KeyCode.G)) {
+				StartCoroutine(gangnamStyle());
+				StopCoroutine(gangnamStyle());
+			}
 		}
 	}
 
