@@ -20,6 +20,9 @@ public class MayaStats : MonoBehaviour {
 	public Text forInfos;
 	public Text agiInfos;
 	public Text conInfos;
+	public Text statPointsInfos;
+
+	public int	statPoints = 0;
 
 	int nextLevelFormula()
 	{
@@ -38,19 +41,21 @@ public class MayaStats : MonoBehaviour {
 		forInfos = forInfos.GetComponent<Text>();
 		agiInfos = agiInfos.GetComponent<Text>();
 		conInfos = conInfos.GetComponent<Text>();
-		levelInfos.text = "\nLvl. " + level;
+		statPointsInfos = statPointsInfos.GetComponent<Text>();
+		levelInfos.text = "  " + level.ToString();
 	}
 
 	void UpdateInfos()
 	{
-		forInfos.text = "FOR " + force;
-		agiInfos.text = "AGI " + agi;
-		conInfos.text = "CON " + con;
+		forInfos.text = force.ToString();
+		agiInfos.text = agi.ToString();
+		conInfos.text = con.ToString();
 	}
 
 	void LevelUp ()
 	{
 		level++;
+		statPoints += 5;
 		Debug.Log("Level up ! Current level: " + level);
 		currentXP -= xpToNextLvl;
 		xpToNextLvl = nextLevelFormula();
@@ -58,7 +63,8 @@ public class MayaStats : MonoBehaviour {
 		hp = hpMax;
 		MayaScript.instance.healthBar.maxValue = hpMax;
 		MayaScript.instance.xpBar.maxValue = xpToNextLvl;
-		levelInfos.text = "\nLvl. " + level;
+		levelInfos.text = "  " + level.ToString();
+		statPointsInfos.text = "  " + statPoints.ToString();
 	}
 
 	void Update ()

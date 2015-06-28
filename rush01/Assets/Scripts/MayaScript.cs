@@ -101,43 +101,47 @@ public class MayaScript : MonoBehaviour {
 		xpBar.value = Stats.currentXP;
 
 		if (Stats.hp <= 0) {
+			agent.destination = transform.position;
 			StartCoroutine(MayaIsDying());
 		}
-
-		if (Input.GetMouseButtonDown (0)) {
-			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-			if (Physics.Raycast (ray.origin, ray.direction, out hit)) {
-				agent.destination = hit.point;
-				if (hit.collider.tag == "Enemy") {
-					hasTarget = true;
-					hasToAttack = true;
-				} else {
-					hasTarget = false;
-					hasToAttack = false;
-					animator.SetBool("attack", false);
-					animator.SetBool("run", true);
+		else {
+			if (Input.GetMouseButtonDown (0)) {
+				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+				if (Physics.Raycast (ray.origin, ray.direction, out hit)) {
+					agent.destination = hit.point;
+					if (hit.collider.tag == "Enemy") {
+						hasTarget = true;
+						hasToAttack = true;
+					} else {
+						hasTarget = false;
+						hasToAttack = false;
+						animator.SetBool("attack", false);
+						animator.SetBool("run", true);
+					}
 				}
 			}
-		}
 
-		targetLocked = Input.GetMouseButton(0);
+			targetLocked = Input.GetMouseButton(0);
 
-		if (agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0) {
-			animator.SetBool ("run", false);
-		} else {
-			animator.SetBool ("run", true);
-		}
+			if (agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0) {
+				animator.SetBool ("run", false);
+			} else {
+				animator.SetBool ("run", true);
+			}
 
-		if (hasToAttack) {
-			StartCoroutine(MayaAttack());
-		}
-		else if (!targetLocked || (hasTarget && hit.collider.gameObject.GetComponent<Enemies>().hp <= 0)) {
-			animator.SetBool ("attack", false);
-			weaponHbox.enabled = false;
-		}
+			if (hasToAttack) {
+				StartCoroutine(MayaAttack());
+				StopCoroutine(MayaAttack());
+			}
+			else if (!targetLocked || (hasTarget && hit.collider.gameObject.GetComponent<Enemies>().hp <= 0)) {
+				animator.SetBool ("attack", false);
+				weaponHbox.enabled = false;
+			}
 
-		if (Input.GetKeyDown (KeyCode.G)) {
-			StartCoroutine(gangnamStyle());
+			if (Input.GetKeyDown (KeyCode.G)) {
+				StartCoroutine(gangnamStyle());
+				StopCoroutine(gangnamStyle());
+			}
 		}
 	}
 
