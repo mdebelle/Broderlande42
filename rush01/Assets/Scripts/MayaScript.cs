@@ -115,12 +115,13 @@ public class MayaScript : MonoBehaviour {
 		}
 
 
-		if (Time.time - leveluptime > 2f &&  xp > 20) {
+		if (Time.time - leveluptime > 2f && xp % 20 == 0) {
 			animator.SetBool ("LevelUp", true);
 			ALevelUp.Play ();
 			leveluptime = Time.time;
+		} else {
+			animator.SetBool ("LevelUp",false);
 		}
-
 	}
 
 
