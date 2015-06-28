@@ -13,6 +13,9 @@ public class SpawnerScript : MonoBehaviour {
 	public ParticleSystem	Born;
 	bool					smoke;
 
+	public int				numberofEnnemies = 10;
+	int						numberofSpawn = 0;
+
 
 	// Use this for initialization
 	void Start () {
@@ -36,9 +39,21 @@ public class SpawnerScript : MonoBehaviour {
 		}
 
 		if (newone == true && Time.time - timetoborn > 4f) {
-			Clone = Instantiate (Zombies[Random.Range(0,2)], transform.position, Quaternion.identity) as Enemies;
+			if (numberofSpawn < numberofEnnemies) {
+				Clone = Instantiate (Zombies[Random.Range(0,2)], transform.position, Quaternion.identity) as Enemies;
+				numberofSpawn++;
+			} else if (numberofSpawn == numberofEnnemies) {
+				Clone = Instantiate (Zombies[2], transform.position, Quaternion.identity) as Enemies;
+				numberofSpawn++;
+			}
 			Clone.gameObject.SetActive(true);
 			newone = false;
 		}
+
+
+		if (numberofSpawn > numberofEnnemies) {
+			gameObject.SetActive(false);
+		}
+
 	}
 }

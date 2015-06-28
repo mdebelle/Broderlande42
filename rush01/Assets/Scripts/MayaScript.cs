@@ -18,7 +18,13 @@ public class MayaScript : MonoBehaviour {
 	string					EnnemyName;
 	GameObject				TmpEnemy;
 	int						xp = 0;
+	float					ggtime;
+	float					leveluptime;
+	
+	public AudioSource		ALevelUp;
+	public AudioSource		AGgstyle;
 
+	public int				Level;
 
 
 	void Start () {
@@ -31,11 +37,16 @@ public class MayaScript : MonoBehaviour {
 
 		clickattack = false;
 		attacked	= false;
+		ggtime 		= 0f;
+
+		Level 		= 3;
+
 	}
 
-	#region dead
-
+	#region dead and health
+	
 	public int 				lifepoint;
+	public int 				lifepointmax;
 	float					timetodead;
 
 	void ItIsTimeToDead (){
@@ -47,7 +58,13 @@ public class MayaScript : MonoBehaviour {
 		} else if (lifepoint < 0 && Time.time - timetodead > 3f) {
 			Destroy(gameObject);
 		}
-
+	}
+	
+	public void increasehealth(int value){
+		lifepoint += value;
+		if (lifepoint > lifepointmax) {
+			lifepoint = lifepointmax;
+		}
 	}
 
 	#endregion
@@ -65,6 +82,18 @@ public class MayaScript : MonoBehaviour {
 		}
 	}
 	void Update () {
+
+
+		if (Time.time - ggtime > 12.5f) {
+			animator.SetBool ("ggstyle", false);
+			AGgstyle.Stop ();
+		}
+		if (Input.GetKeyDown (KeyCode.L)) {
+			animator.SetBool ("ggstyle", true);
+			AGgstyle.Play ();
+			ggtime = Time.time;
+		}
+
 		if (lifepoint <= 0)
 			ItIsTimeToDead ();
 
@@ -100,6 +129,15 @@ public class MayaScript : MonoBehaviour {
 		} else {
 			animator.SetBool ("run", true);
 		}
+
+
+		if (Time.time - leveluptime > 2f && xp % 20 == 0) {
+			animator.SetBool ("LevelUp", true);
+			ALevelUp.Play ();
+			leveluptime = Time.time;
+		} else {
+			animator.SetBool ("LevelUp",false);
+		}
 	}
 
 
@@ -126,10 +164,12 @@ public class MayaScript : MonoBehaviour {
 			clickattack = false;
 			xp += 5;
 			animator.SetBool ("attack", false);
+			Debug.Log (xp);
 		}
 	}
 
 	void OnAnimatorMove () {
 		transform.position = agent.nextPosition;
 	}
+
 }

@@ -1,10 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/SpawnerScript.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Enemies.cs">
     <Files>
-      <File FileName="Assets/Scripts/LootScripts.cs" Line="11" Column="3" />
-      <File FileName="Assets/Scripts/Enemies.cs" Line="17" Column="10" />
-      <File FileName="Assets/Scripts/SpawnerScript.cs" Line="31" Column="16" />
+      <File FileName="Assets/Scripts/LootScripts.cs" Line="13" Column="46" />
+      <File FileName="Assets/Scripts/Enemies.cs" Line="33" Column="30" />
+      <File FileName="Assets/Scripts/SpawnerScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/MayaScript.cs" Line="42" Column="15" />
+      <File FileName="Assets/Inventory/Resources/Editor/InventoryEditor.js" Line="1" Column="1" />
+      <File FileName="Assets/Inventory/Scripts/Items/Item.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
