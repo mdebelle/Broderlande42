@@ -20,8 +20,9 @@ public class MayaScript : MonoBehaviour {
 	int						xp = 0;
 	float					ggtime;
 	float					leveluptime;
-
+	
 	public AudioSource		ALevelUp;
+	public AudioSource		AGgstyle;
 
 
 	void Start () {
@@ -71,10 +72,13 @@ public class MayaScript : MonoBehaviour {
 	void Update () {
 
 
-		if (Time.time - ggtime > 3f)
+		if (Time.time - ggtime > 12.5f) {
 			animator.SetBool ("ggstyle", false);
+			AGgstyle.Stop ();
+		}
 		if (Input.GetKeyDown (KeyCode.L)) {
 			animator.SetBool ("ggstyle", true);
+			AGgstyle.Play ();
 			ggtime = Time.time;
 		}
 
@@ -115,12 +119,13 @@ public class MayaScript : MonoBehaviour {
 		}
 
 
-		if (Time.time - leveluptime > 2f &&  xp > 20) {
+		if (Time.time - leveluptime > 2f && xp % 20 == 0) {
 			animator.SetBool ("LevelUp", true);
 			ALevelUp.Play ();
 			leveluptime = Time.time;
+		} else {
+			animator.SetBool ("LevelUp",false);
 		}
-
 	}
 
 
