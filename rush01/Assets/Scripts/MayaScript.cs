@@ -24,6 +24,8 @@ public class MayaScript : MonoBehaviour {
 	public AudioSource		ALevelUp;
 	public AudioSource		AGgstyle;
 
+	public int				Level;
+
 
 	void Start () {
 
@@ -35,12 +37,16 @@ public class MayaScript : MonoBehaviour {
 
 		clickattack = false;
 		attacked	= false;
-		ggtime = 0f;
+		ggtime 		= 0f;
+
+		Level 		= 3;
+
 	}
 
-	#region dead
-
+	#region dead and health
+	
 	public int 				lifepoint;
+	public int 				lifepointmax;
 	float					timetodead;
 
 	void ItIsTimeToDead (){
@@ -52,7 +58,13 @@ public class MayaScript : MonoBehaviour {
 		} else if (lifepoint < 0 && Time.time - timetodead > 3f) {
 			Destroy(gameObject);
 		}
-
+	}
+	
+	public void increasehealth(int value){
+		lifepoint += value;
+		if (lifepoint > lifepointmax) {
+			lifepoint = lifepointmax;
+		}
 	}
 
 	#endregion
@@ -159,4 +171,5 @@ public class MayaScript : MonoBehaviour {
 	void OnAnimatorMove () {
 		transform.position = agent.nextPosition;
 	}
+
 }

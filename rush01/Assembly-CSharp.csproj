@@ -48,16 +48,17 @@
   <ItemGroup>
      <Compile Include="Assets\Elementals\Scripts\OrbitCamera.cs" />
      <Compile Include="Assets\Elementals\Scripts\TestParticles.cs" />
-     <Compile Include="Assets\GameEngineScripe.cs" />
-     <Compile Include="Assets\IntroScripte.cs" />
      <Compile Include="Assets\Mixamo\Magic Pack\Demo\CameraScroll.cs" />
-     <Compile Include="Assets\ScaleParticle.cs" />
      <Compile Include="Assets\Scripts\Enemies.cs" />
+     <Compile Include="Assets\Scripts\GameEngineScripe.cs" />
+     <Compile Include="Assets\Scripts\IntroScripte.cs" />
      <Compile Include="Assets\Scripts\LevelingScript.cs" />
      <Compile Include="Assets\Scripts\LootScripts.cs" />
      <Compile Include="Assets\Scripts\MayaScript.cs" />
+     <Compile Include="Assets\Scripts\ScaleParticle.cs" />
      <Compile Include="Assets\Scripts\SkillsScript.cs" />
      <Compile Include="Assets\Scripts\SpawnerScript.cs" />
+     <Compile Include="Assets\Scripts\WeaponScript.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />

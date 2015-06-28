@@ -16,6 +16,9 @@ public class Enemies : MonoBehaviour {
 
 	public List<LootScripts>		loots = new List<LootScripts> ();
 
+	string[]				renames = {"Xavier Niel", "Nicolas Sadiraque", "Kwame", "Butcher", "Oll", "Thør"};
+
+
 	float					distToMaya;
 	public AudioSource		AHeart;
 	public AudioSource		Aattack;
@@ -25,7 +28,10 @@ public class Enemies : MonoBehaviour {
 		animator = GetComponent<Animator>();
 		animator.SetBool("idle", false);
 		agent = GetComponent<NavMeshAgent>();
-		lifepoint = 3;
+		lifepoint = Maya.GetComponent<MayaScript>().Level * 3;
+
+		name = renames[Random.Range(0, 7)];
+
 		AHeart.Play ();
 	}
 
