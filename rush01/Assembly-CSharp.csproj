@@ -48,8 +48,6 @@
   <ItemGroup>
      <Compile Include="Assets\Elementals\Scripts\OrbitCamera.cs" />
      <Compile Include="Assets\Elementals\Scripts\TestParticles.cs" />
-     <Compile Include="Assets\GameEngineScripe.cs" />
-     <Compile Include="Assets\IntroScripte.cs" />
      <Compile Include="Assets\Mixamo\Magic Pack\Demo\CameraScroll.cs" />
      <Compile Include="Assets\Scripts\Enemies.cs" />
      <Compile Include="Assets\Scripts\GameEngineScripe.cs" />
