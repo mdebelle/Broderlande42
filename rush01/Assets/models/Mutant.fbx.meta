@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 03409832ed7ee415fb56aac1ab862dd1
-timeCreated: 1435470303
+timeCreated: 1435513453
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -363,13 +363,16 @@ ModelImporter:
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
+    - boneName: Mutant:LeftHand
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
     skeleton:
     - name: Mutant(Clone)
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
-    - name: MutantMesh
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
@@ -379,18 +382,43 @@ ModelImporter:
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
+    - name: Mutant:LeftUpLeg
+      position: {x: -.204839602, y: -.107028633, z: .00194544555}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Mutant:LeftLeg
+      position: {x: -4.0310988e-07, y: -.538786829, z: .0222216025}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Mutant:LeftFoot
+      position: {x: -9.32587298e-16, y: -.514610946, z: -.0397011563}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Mutant:LeftToeBase
+      position: {x: -7.19424522e-16, y: -.227896497, z: .223677203}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Mutant:LeftToe_End
+      position: {x: -1.86517462e-16, y: -7.26085854e-16, z: .253257275}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
     - name: Mutant:RightUpLeg
-      position: {x: .204839587, y: -.107028633, z: .00194544543}
+      position: {x: .204839602, y: -.107028633, z: .00194544555}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: Mutant:RightLeg
-      position: {x: 4.03109908e-07, y: -.538786829, z: .0222216025}
+      position: {x: 4.0310988e-07, y: -.538786829, z: .0222216025}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: Mutant:RightFoot
-      position: {x: 6.39488435e-16, y: -.514610946, z: -.0397011526}
+      position: {x: 6.39488435e-16, y: -.514610946, z: -.0397011563}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
@@ -404,38 +432,13 @@ ModelImporter:
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
-    - name: Mutant:LeftUpLeg
-      position: {x: -.204839587, y: -.107028633, z: .00194544543}
-      rotation: {x: 0, y: 0, z: 0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
-    - name: Mutant:LeftLeg
-      position: {x: -4.03109908e-07, y: -.538786829, z: .0222216025}
-      rotation: {x: 0, y: 0, z: 0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
-    - name: Mutant:LeftFoot
-      position: {x: -9.32587298e-16, y: -.514610946, z: -.0397011526}
-      rotation: {x: 0, y: 0, z: 0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
-    - name: Mutant:LeftToeBase
-      position: {x: -7.19424416e-16, y: -.227896497, z: .223677203}
-      rotation: {x: 0, y: 0, z: 0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
-    - name: Mutant:LeftToe_End
-      position: {x: -1.86517476e-16, y: -7.26085907e-16, z: .253257275}
-      rotation: {x: 0, y: 0, z: 0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Mutant:Spine
-      position: {x: 4.4964026e-17, y: .161457866, z: .0186527483}
+      position: {x: 4.49640326e-17, y: .161457866, z: .0186527502}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: Mutant:Spine1
-      position: {x: .000283899077, y: .195920154, z: .00341221155}
+      position: {x: .000283899077, y: .195920154, z: .00341221178}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
@@ -444,43 +447,58 @@ ModelImporter:
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
+    - name: Mutant:LeftShoulder
+      position: {x: -.143303514, y: .240980789, z: -.07841748}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Mutant:LeftArm
+      position: {x: -.268394858, y: .0309911966, z: -.0138439406}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Mutant:LeftForeArm
+      position: {x: -.395621508, y: -1.52523683e-06, z: -.021885965}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Mutant:LeftHand
+      position: {x: -.401301503, y: 5.35801928e-06, z: 2.40750495e-07}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Mutant:Neck
+      position: {x: .00017890663, y: .370059878, z: .0304215103}
+      rotation: {x: -.0555742271, y: 0, z: 3.53383572e-11, w: .998454571}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Mutant:Head
+      position: {x: 3.86635515e-11, y: .132259861, z: .0915392339}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Mutant:HeadTop_End
+      position: {x: -.00078726199, y: .307409167, z: -.00423755497}
+      rotation: {x: 2.45050576e-16, y: -1.52465853e-19, z: -1.73472348e-18, w: 1}
+      scale: {x: 9.99999975e-05, y: 9.99999975e-05, z: 9.99999975e-05}
+      transformModified: 1
     - name: Mutant:RightShoulder
-      position: {x: .143303499, y: .240980774, z: -.07841748}
+      position: {x: .143303514, y: .240980789, z: -.07841748}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: Mutant:RightArm
-      position: {x: .267178148, y: .0309911985, z: -.0138439396}
+      position: {x: .267178148, y: .0309911966, z: -.0138439406}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: Mutant:RightForeArm
-      position: {x: .395621508, y: -1.52523694e-06, z: -.0218859632}
+      position: {x: .395621508, y: -1.52523683e-06, z: -.021885965}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: Mutant:RightHand
-      position: {x: .401301473, y: 5.35801928e-06, z: 2.40750467e-07}
-      rotation: {x: 0, y: 0, z: 0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
-    - name: Mutant:RightHandPinky1
-      position: {x: .262616485, y: -.00716617238, z: -.1500462}
-      rotation: {x: 0, y: 0, z: 0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
-    - name: Mutant:RightHandPinky2
-      position: {x: .105663329, y: 1.19234331e-10, z: -2.75883309e-12}
-      rotation: {x: 0, y: 0, z: 0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
-    - name: Mutant:RightHandPinky3
-      position: {x: .106183551, y: 6.1772025e-11, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
-    - name: Mutant:RightHandPinky4
-      position: {x: .106394365, y: 3.66550505e-11, z: -3.48984591e-10}
+      position: {x: .401301503, y: 5.35801928e-06, z: 2.40750495e-07}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
@@ -490,74 +508,64 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: Mutant:RightHandIndex2
-      position: {x: .112715684, y: 1.19237731e-10, z: -2.75913949e-12}
+      position: {x: .112715691, y: 1.19237731e-10, z: -2.75913949e-12}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: Mutant:RightHandIndex3
-      position: {x: .112340815, y: 1.02758961e-10, z: 1.33226752e-17}
-      rotation: {x: 0, y: .00209189719, z: .00621410366, w: .999978542}
+      position: {x: .112340808, y: 1.02758975e-10, z: 1.3322676e-17}
+      rotation: {x: 0, y: .00209190208, z: .00621411065, w: .999978542}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: Mutant:RightHandIndex4
-      position: {x: .101081967, y: -.00918679405, z: .00309260562}
+      position: {x: .10108196, y: -.00918679498, z: .00309260585}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Mutant:RightHandPinky1
+      position: {x: .262616456, y: -.00716617191, z: -.1500462}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Mutant:RightHandPinky2
+      position: {x: .105663329, y: 1.19234331e-10, z: -2.75883309e-12}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Mutant:RightHandPinky3
+      position: {x: .106183544, y: 6.1772025e-11, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Mutant:RightHandPinky4
+      position: {x: .106394365, y: 3.66550505e-11, z: -3.48984591e-10}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: Mutant:RightHandThumb1
-      position: {x: .0373852141, y: -.0666952059, z: .0924521461}
-      rotation: {x: -.09575928, y: .00638859021, z: .09575928, w: .990767121}
+      position: {x: .0373852141, y: -.0666952133, z: .0924521461}
+      rotation: {x: -.0957585424, y: .00638863817, z: .0957585424, w: .9907673}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: Mutant:RightHandThumb2
-      position: {x: .0990396366, y: -.0647100583, z: .103356734}
-      rotation: {x: -.00965790357, y: -.0756918043, z: -.0381350331, w: .996354938}
+      position: {x: .099039644, y: -.0647100583, z: .103356734}
+      rotation: {x: -.00965795852, y: -.0756922513, z: -.0381353199, w: .996354938}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: Mutant:RightHandThumb3
       position: {x: .101771504, y: -.0445035025, z: .0625578985}
-      rotation: {x: .00247909641, y: -.0353215709, z: -.0291607324, w: .998947442}
+      rotation: {x: .00247881631, y: -.0353217162, z: -.0291602314, w: .998947382}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: Mutant:RightHandThumb4
-      position: {x: .106959805, y: -.030506257, z: .0460445322}
+      position: {x: .106959805, y: -.030506257, z: .0460445285}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
-    - name: Mutant:LeftShoulder
-      position: {x: -.143303499, y: .240980774, z: -.07841748}
+    - name: MutantMesh
+      position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
-    - name: Mutant:LeftArm
-      position: {x: -.268394858, y: .0309911985, z: -.0138439396}
-      rotation: {x: 0, y: 0, z: 0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
-    - name: Mutant:LeftForeArm
-      position: {x: -.395621508, y: -1.52523694e-06, z: -.0218859632}
-      rotation: {x: 0, y: 0, z: 0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
-    - name: Mutant:LeftHand
-      position: {x: -.401301473, y: 5.35801928e-06, z: 2.40750467e-07}
-      rotation: {x: 0, y: 0, z: 0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
-    - name: Mutant:Neck
-      position: {x: .00017890663, y: .370059878, z: .0304215122}
-      rotation: {x: -.0555741191, y: 0, z: 0, w: .998454571}
-      scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
-    - name: Mutant:Head
-      position: {x: 3.86635515e-11, y: .132259861, z: .0915392265}
-      rotation: {x: 0, y: 0, z: 0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
-    - name: Mutant:HeadTop_End
-      position: {x: -.000787261932, y: .307409167, z: -.00423755497}
-      rotation: {x: 2.45050576e-16, y: -1.52465853e-19, z: -1.73472348e-18, w: 1}
-      scale: {x: 9.99999975e-05, y: 9.99999975e-05, z: 9.99999975e-05}
       transformModified: 1
     armTwist: .5
     foreArmTwist: .5
